@@ -3,12 +3,61 @@ var w = c.width = window.innerWidth,
 		ctx = c.getContext( '2d' ),
 		
 		hw = w / 2, 
-		hh = h / 2 - 50,
+		hh = h / 2 - 100,
 		
 		opts = {
-			strings: [ 'FELIZ', 'CUMPLE','', 'SONIBETH', '"UCHIHA"', 'EVELIN'],
-			charSize: 30,
-			charSpacing: 33,
+			animID : 0,
+			text : [
+				[ 'FELIZ', 'CUMPLE','', 'SONIBETH', '"UCHIHA"', 'EVELIN'],
+				[ 'TE DESEO', 'QUE CUMPLAS', 'MUCHOS AÑOS', 'MAS'],
+				[ 'QUE SE', 'CUMPLAN', 'TODOS', "TUS DESEOS"],
+				[ 'QUE LA', "FELICIDAD Y", 'EL AMOR TE', 'ACOMPAÑEN', 'SIEMPRE'],
+				[ 'TAMBIEN...'],
+				[ 'QUE NUNCA', "ENCUENTRES", "ANIMES MALOS"],
+				[ 'QUE LOS','PROTAS NUNCA', 'SE NOS', 'MUERAN'],
+				[ 'QUE ESTE', 'AÑO SALGA','NO GAME', 'NO LIFE 2'],
+				[ 'QUE PORFIN', 'VEAS', 'ONE PIECE :D'],
+				[ 'QUE ALGUN','DIA VIAJES', 'A JAPON', '','','Y ME LLEVES', ';)'],
+				[ 'Y SI', 'ESPERAS UN', 'REGALO...'],
+				[ 'LA VERDAD', 'NO SE QUE', 'DARTE :P'],
+				[ 'TALVES UNA', 'FIGURA O','QUIZAS UN','COLLAR'],
+				[ 'PERO POR','AHORA...'],
+				[ 'TE MANDO','UN ABRASO', 'Y UN BESO', 'DESDE LEJOS'],
+				[ 'Y COMO DICEN', 'EN JAPÓN...'],
+				[ 'OTANJŌBI','OMEDETŌ', "お誕生日おめでとう"],
+				[ 
+				  '',
+				  '  ♡♡♡   ♡♡♡  ',
+				  '♡♡♡♡♡♡♡♡♡♡♡',
+				  '♡♡♡♡♡♡♡♡♡♡♡',
+				  ' ♡♡♡♡♡♡♡♡♡ ',
+				  '  ♡♡♡♡♡♡♡  ',
+				  '    ♡♡♡    ',
+				  '     ♡     ',
+				],
+				[
+					' ,,,,,, ',
+					' |||||| ',
+					'{~~~~~~~}',
+					'{~~~~~~~}',
+					'{~~~~~~~}',
+					'`~~~~~~~`',
+				],
+				[
+					'    _  _    ',
+					' __(_\/_)__ ',
+					'|____||____|',
+					'|    ||    |',
+					'|____||____|',
+				],
+				[ '' ],
+				[ '' ],
+				
+			],
+
+
+			charSize: 25,
+			charSpacing: 28,
 			lineHeight: 40,
 			
 			cx: w / 2,
@@ -47,13 +96,14 @@ var w = c.width = window.innerWidth,
 			balloonAddedRadian: -1,
 		},
 		calc = {
-			totalWidth: opts.charSpacing * Math.max( opts.strings[0].length, opts.strings[1].length )
+			totalWidth: opts.charSpacing * Math.max( opts.text[0][0].length, opts.text[0][1].length )
 		},
 		
 		Tau = Math.PI * 2,
 		TauQuarter = Tau / 4,
 		
 		letters = [];
+		letters2 = [];
 
 ctx.font = opts.charSize + 'px Verdana';
 
@@ -62,7 +112,7 @@ function Letter( char, x, y ){
 	this.x = x;
 	this.y = y;
 	
-	this.dx = -ctx.measureText( char ).width / 2;
+	this.dx = -ctx.measureText( char ).width / 2 - (opts.charSpacing/2);
 	this.dy = +opts.charSize / 2;
 	
 	this.fireworkDy = this.y - hh;
@@ -356,6 +406,7 @@ function generateBalloonPath( x, y, size ){
 									   x,            y );
 }
 
+
 function anim(){
 	
 	window.requestAnimationFrame( anim );
@@ -366,26 +417,36 @@ function anim(){
 	ctx.translate( hw, hh );
 	
 	var done = true;
-	for( var l = 0; l < letters.length; ++l ){
+	
+	for( var l = 0; l < letters[opts.animID].length; ++l ){
 		
-		letters[ l ].step();
-		if( letters[ l ].phase !== 'done' )
+		letters[opts.animID][ l ].step();
+		if( letters[opts.animID][ l ].phase !== 'done' )
 			done = false;
 	}
 	
 	ctx.translate( -hw, -hh );
 	
-	if( done )
-		for( var l = 0; l < letters.length; ++l )
-			letters[ l ].reset();
+	if( done ){
+		for( var l = 0; l < letters[opts.animID].length; ++l )
+			letters[opts.animID][ l ].reset();
+
+		opts.animID++;
+		if (opts.animID >= letters.length) opts.animID = 0;
+	}
 }
 
-for( var i = 0; i < opts.strings.length; ++i ){
-	for( var j = 0; j < opts.strings[ i ].length; ++j ){
-		letters.push( new Letter( opts.strings[ i ][ j ], 
-														j * opts.charSpacing + opts.charSpacing / 2 - opts.strings[ i ].length * opts.charSize / 2,
-														i * opts.lineHeight + opts.lineHeight / 2 - opts.strings.length * opts.lineHeight / 2 ) );
-	}
+for (let animID in opts.text){
+	let lista = []
+	for( var i = 0; i < opts.text[animID].length; ++i ){
+		for( var j = 0; j < opts.text[animID][ i ].length; ++j ){
+			
+			lista.push( new Letter( opts.text[animID][ i ][ j ], 
+				j * opts.charSpacing + opts.charSpacing / 2 - opts.text[animID][ i ].length * opts.charSize / 2,
+				i * opts.lineHeight + opts.lineHeight / 2 - opts.text[animID].length * opts.lineHeight / 2 ) );
+		}
+	}	
+	letters.push(lista)	
 }
 
 anim();
