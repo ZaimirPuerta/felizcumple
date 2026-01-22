@@ -12,18 +12,18 @@ var w = c.width = window.innerWidth,
 				[ 'TE DESEO', 'QUE CUMPLAS', 'MUCHOS AÑOS', 'MAS'],
 				[ 'QUE SE', 'CUMPLAN', 'TODOS', "TUS DESEOS"],
 				[ 'QUE LA', "FELICIDAD Y", 'EL AMOR TE', 'ACOMPAÑEN', 'SIEMPRE'],
-				[ 'TAMBIEN...'],
+				[ 'Y TAMBIEN...'],
 				[ 'QUE NUNCA', "ENCUENTRES", "ANIMES MALOS"],
-				[ 'QUE LOS','PROTAS NUNCA', 'SE NOS', 'MUERAN'],
+				[ 'QUE TUS','PERSONAJES', 'FAVORITOS','NUNCA', 'MUERAN'],
 				[ 'QUE ESTE', 'AÑO SALGA','NO GAME', 'NO LIFE 2'],
 				[ 'QUE PORFIN', 'VEAS', 'ONE PIECE :D'],
-				[ 'QUE ALGUN','DIA VIAJES', 'A JAPON', '','','Y ME LLEVES', ';)'],
+				[ 'QUE ALGUN','DIA VIAJES', 'A JAPÓN', '','','Y ME LLEVES', ';)'],
 				[ 'Y SI', 'ESPERAS UN', 'REGALO...'],
 				[ 'LA VERDAD', 'NO SE QUE', 'DARTE :P'],
-				[ 'TALVES UNA', 'FIGURA O','QUIZAS UN','COLLAR'],
+				[ 'TALVES TE DE', 'UN COLLAR'],
 				[ 'PERO POR','AHORA...'],
 				[ 'TE MANDO','UN ABRASO', 'Y UN BESO', 'DESDE LEJOS'],
-				[ 'Y COMO DICEN', 'EN JAPÓN...'],
+				[ 'Y COMO', 'DICEN', 'EN JAPÓN...'],
 				[ 'OTANJŌBI','OMEDETŌ', "お誕生日おめでとう"],
 				[ 
 				  '',
@@ -57,7 +57,7 @@ var w = c.width = window.innerWidth,
 
 
 			charSize: 25,
-			charSpacing: 28,
+			charSpacing: 27,
 			lineHeight: 40,
 			
 			cx: w / 2,
@@ -109,10 +109,10 @@ ctx.font = opts.charSize + 'px Verdana';
 
 function Letter( char, x, y ){
 	this.char = char;
-	this.x = x;
+	this.x = x - (opts.charSpacing/2);
 	this.y = y;
 	
-	this.dx = -ctx.measureText( char ).width / 2 - (opts.charSpacing/2);
+	this.dx = -ctx.measureText( char ).width / 2
 	this.dy = +opts.charSize / 2;
 	
 	this.fireworkDy = this.y - hh;
