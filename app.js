@@ -3,12 +3,12 @@ var w = c.width = window.innerWidth,
 		ctx = c.getContext( '2d' ),
 		
 		hw = w / 2, 
-		hh = h / 2,
+		hh = h / 2 - 50,
 		
 		opts = {
-			strings: [ 'FELIZ', 'CUMPLE','PAPI♥'],
+			strings: [ 'FELIZ', 'CUMPLE','', 'SONIBETH', '"UCHIHA"', 'EVELIN'],
 			charSize: 30,
-			charSpacing: 35,
+			charSpacing: 33,
 			lineHeight: 40,
 			
 			cx: w / 2,
@@ -276,7 +276,7 @@ Letter.prototype.step = function(){
 			}
 			
 		} else {
-			
+			// MOVE
 			this.cx += this.vx;
 			this.cy += this.vy += opts.upFlow;
 			
